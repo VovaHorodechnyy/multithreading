@@ -1,0 +1,470 @@
+package sample;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+       Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.show();
+
+    }
+
+
+    public static void main(String[] args)throws InterruptedException
+    {
+
+        ReentrantLock tac=new  ReentrantLock ();
+        // Mutex tic =new Mutex();
+       //  System.out.println("tic");
+        fucing_java mtx1=new fucing_java();
+        mtx1.mtx=false;
+
+        ReentrantLock r=new  ReentrantLock ();
+        Thread t1 =new Thread(new CTic(tac,r,mtx1));
+        t1.start();
+
+        Thread t4 =new Thread(new CTic(tac,r,mtx1));
+        t4.start();
+        Thread t3 =new Thread(new CTac(tac,r,mtx1));
+        t3.start();
+        Thread t2 =new Thread(new CTac(tac,r,mtx1));
+        t2.start();
+
+
+
+
+
+
+
+
+
+
+
+
+
+t1.join();;
+       t2.join();;
+        t3.join();;
+        t4.join();;
+
+
+
+
+       System.out.println("end");
+
+
+
+
+
+
+    }
+}
+class fucing_java
+{
+    public volatile Boolean mtx;
+}
+
+class CTic implements Runnable
+{
+    private ReentrantLock tic;
+    private  ReentrantLock  tac;
+    fucing_java fj;
+    public CTic(ReentrantLock  mtx,ReentrantLock r,fucing_java mtx1)
+    {
+        this.tic=r;
+        this.tac=mtx;
+        fj=mtx1;
+    }
+    @Override
+    public  void run()  {
+
+        synchronized(tic)
+        {
+
+            if(fj.mtx) {
+                try {
+                    tic.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else tic.notify();
+            while (!fj.mtx)
+            {
+
+                System.out.println("tic");
+                fj.mtx=true;
+                break;
+
+            }
+
+
+        }
+      //  System.out.println(r);
+//    if(tac.tryLock())
+//    {
+//
+//        System.out.println("tic");
+//        tac.lock();
+//    }
+
+       // synchronized (tic)
+       // {
+          //  tac.lock();
+//    if(!tac.isLocked())
+//    tac.lock();
+//
+//
+//    tic.lock();
+//    System.out.println("tic");
+//
+//    if(tac.isLocked())
+//    tac.unlock();
+
+
+
+
+          //  tac.unlock();
+
+     //   }
+
+
+    }
+}
+
+
+
+class CTac implements Runnable
+{
+    private ReentrantLock tic;
+    private  ReentrantLock  tac;
+    fucing_java fj;
+    public CTac(ReentrantLock  mtx,ReentrantLock r,fucing_java mtx1)
+    {
+        this.tic=r;
+        this.tac=mtx;
+        fj=mtx1;
+    }
+    @Override
+    public  void run()
+    {
+        synchronized(tic)
+        {
+//            if(!fj.mtx) {
+//                try {
+//                    tic.wait();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+            if(!fj.mtx) {
+                try {
+                    tic.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else tic.notify();
+                while (fj.mtx)
+                {
+
+                    System.out.println("tac");
+                    fj.mtx=false;
+                    break;
+
+                }
+
+
+        }
+
+
+
+//       tic.lock();
+//        System.out.println("tac");
+//        if(tac.isLocked())
+//        tac.unlock();
+//        try {
+//            Thread.sleep(500);
+//        }catch (Exception ex)
+//        {
+//
+//        }
+//        tic.unlock();
+       // synchronized (tic)
+     //   {
+         //   tac.lock();
+//            if(!fj.mtx)
+//            {
+//                System.out.println("tac");
+//                fj.mtx=true;
+//            }
+//        //    tac.unlock();
+
+       // }
+
+
+//        if(!tic.isLocked())
+//        tic.lock();
+//        tac.lock();
+//        System.out.println("tac");
+//        if(tic.isLocked())
+//        tic.unlock();
+
+
+
+    }
+}
+------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------
+package sample;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+       Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.show();
+
+    }
+
+
+    public static void main(String[] args)throws InterruptedException
+    {
+
+        ReentrantLock tac=new  ReentrantLock ();
+        // Mutex tic =new Mutex();
+       //  System.out.println("tic");
+        fucing_java mtx1=new fucing_java();
+        mtx1.mtx=true;
+
+        ReentrantLock r=new  ReentrantLock ();
+        Thread t1 =new Thread(new CTic(tac,r,mtx1));
+        t1.start();
+
+        Thread t4 =new Thread(new CTic(tac,r,mtx1));
+        t4.start();
+
+
+
+
+        Thread t2 =new Thread(new CTac(tac,r,mtx1));
+        t2.start();
+        Thread t3 =new Thread(new CTac(tac,r,mtx1));
+        t3.start();
+
+
+
+
+
+
+
+
+
+
+
+
+        t1.join();;
+       t2.join();;
+        t3.join();;
+        t4.join();;
+
+
+
+
+       System.out.println("end");
+
+
+
+
+
+
+    }
+}
+class fucing_java
+{
+    public volatile Boolean mtx;
+}
+
+class CTic implements Runnable
+{
+    private ReentrantLock tic;
+    private  ReentrantLock  tac;
+    fucing_java fj;
+    public CTic(ReentrantLock  mtx,ReentrantLock r,fucing_java mtx1)
+    {
+        this.tic=r;
+        this.tac=mtx;
+        fj=mtx1;
+    }
+    @Override
+    public  void run()  {
+
+        synchronized(tic)
+        {
+
+            if(fj.mtx) {
+                try {
+                    tic.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else tic.notify();
+            while (!fj.mtx)
+            {
+
+                System.out.println("tic");
+                fj.mtx=true;
+                break;
+
+            }
+
+
+        }
+      //  System.out.println(r);
+//    if(tac.tryLock())
+//    {
+//
+//        System.out.println("tic");
+//        tac.lock();
+//    }
+
+       // synchronized (tic)
+       // {
+          //  tac.lock();
+//    if(!tac.isLocked())
+//    tac.lock();
+//
+//
+//    tic.lock();
+//    System.out.println("tic");
+//
+//    if(tac.isLocked())
+//    tac.unlock();
+
+
+
+
+          //  tac.unlock();
+
+     //   }
+
+
+    }
+}
+
+
+
+class CTac implements Runnable
+{
+    private ReentrantLock tic;
+    private  ReentrantLock  tac;
+    fucing_java fj;
+    public CTac(ReentrantLock  mtx,ReentrantLock r,fucing_java mtx1)
+    {
+        this.tic=r;
+        this.tac=mtx;
+        fj=mtx1;
+    }
+    @Override
+    public  void run()
+    {
+        synchronized(tic)
+        {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+//            if(!fj.mtx) {
+//                try {
+//                    tic.wait();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+            if(!fj.mtx) {
+                try {
+                    tic.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else tic.notify();
+                while (fj.mtx)
+                {
+
+                    System.out.println("tac");
+                    fj.mtx=false;
+                    break;
+
+                }
+
+
+        }
+
+
+
+//       tic.lock();
+//        System.out.println("tac");
+//        if(tac.isLocked())
+//        tac.unlock();
+//        try {
+//            Thread.sleep(500);
+//        }catch (Exception ex)
+//        {
+//
+//        }
+//        tic.unlock();
+       // synchronized (tic)
+     //   {
+         //   tac.lock();
+//            if(!fj.mtx)
+//            {
+//                System.out.println("tac");
+//                fj.mtx=true;
+//            }
+//        //    tac.unlock();
+
+       // }
+
+
+//        if(!tic.isLocked())
+//        tic.lock();
+//        tac.lock();
+//        System.out.println("tac");
+//        if(tic.isLocked())
+//        tic.unlock();
+
+
+
+    }
+}
