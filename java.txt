@@ -29,7 +29,7 @@ public class Main extends Application {
         ReentrantLock tac=new  ReentrantLock ();
         // Mutex tic =new Mutex();
        //  System.out.println("tic");
-        fucing_java mtx1=new fucing_java();
+        java__ mtx1=new java__();
         mtx1.mtx=false;
 
         ReentrantLock r=new  ReentrantLock ();
@@ -72,7 +72,7 @@ t1.join();;
 
     }
 }
-class fucing_java
+class java__
 {
     public volatile Boolean mtx;
 }
@@ -81,8 +81,8 @@ class CTic implements Runnable
 {
     private ReentrantLock tic;
     private  ReentrantLock  tac;
-    fucing_java fj;
-    public CTic(ReentrantLock  mtx,ReentrantLock r,fucing_java mtx1)
+    java__ fj;
+    public CTic(ReentrantLock  mtx,ReentrantLock r,java__ mtx1)
     {
         this.tic=r;
         this.tac=mtx;
@@ -151,8 +151,8 @@ class CTac implements Runnable
 {
     private ReentrantLock tic;
     private  ReentrantLock  tac;
-    fucing_java fj;
-    public CTac(ReentrantLock  mtx,ReentrantLock r,fucing_java mtx1)
+    java__ fj;
+    public CTac(ReentrantLock  mtx,ReentrantLock r,java__ mtx1)
     {
         this.tic=r;
         this.tac=mtx;
@@ -262,7 +262,7 @@ public class Main extends Application {
         ReentrantLock tac=new  ReentrantLock ();
         // Mutex tic =new Mutex();
        //  System.out.println("tic");
-        fucing_java mtx1=new fucing_java();
+        java__ mtx1=new java__();
         mtx1.mtx=true;
 
         ReentrantLock r=new  ReentrantLock ();
@@ -308,7 +308,7 @@ public class Main extends Application {
 
     }
 }
-class fucing_java
+class java__
 {
     public volatile Boolean mtx;
 }
@@ -317,8 +317,8 @@ class CTic implements Runnable
 {
     private ReentrantLock tic;
     private  ReentrantLock  tac;
-    fucing_java fj;
-    public CTic(ReentrantLock  mtx,ReentrantLock r,fucing_java mtx1)
+    java__ fj;
+    public CTic(ReentrantLock  mtx,ReentrantLock r,java__ mtx1)
     {
         this.tic=r;
         this.tac=mtx;
@@ -387,8 +387,8 @@ class CTac implements Runnable
 {
     private ReentrantLock tic;
     private  ReentrantLock  tac;
-    fucing_java fj;
-    public CTac(ReentrantLock  mtx,ReentrantLock r,fucing_java mtx1)
+    java__ fj;
+    public CTac(ReentrantLock  mtx,ReentrantLock r,java__ mtx1)
     {
         this.tic=r;
         this.tac=mtx;
